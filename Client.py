@@ -15,7 +15,7 @@ def client_program():
 
     while True:
         # User input for message or file command
-        message = input("Client ->")
+        message = input("Client -> ")
 
         # Send the message
         client_socket.send(message.encode())
