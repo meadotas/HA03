@@ -31,6 +31,10 @@ def server_program():
 
         print(f"Client: {data}")
 
+        # If the received data was a goodbye message then break out of the connection
+        if data.lower() == 'bye' or data.lower() == 'goodbye':
+            break
+
         # Check if received data from the client is of the command send file
         if data.lower() == 'send file':
 
@@ -52,12 +56,9 @@ def server_program():
             # Encode the data and send it back to the client
             connection.send(message.encode())
 
-        # If the received data was a goodbye message then break out of the connection
-        if data.lower() == 'bye' or data.lower() == 'goodbye':
-            break
-
     # Close the connection
     connection.close()
+    print("Server connection closed.")
 
 if __name__ == '__main__':
     server_program()

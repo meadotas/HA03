@@ -39,6 +39,7 @@ def client_program():
 
     # Close the client connection
     client_socket.close()
+    print("Client connection closed.")
 
 if __name__ == '__main__':
     client_program()
