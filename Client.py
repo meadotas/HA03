@@ -1,4 +1,5 @@
 import socket
+import os 
 
 def client_program():
     # Get the hostname (local machine)
@@ -23,12 +24,17 @@ def client_program():
         # If the client wants to send a file
         if message.lower() == 'send file':
             file_name = input("Enter the file name to send: ")
-            client_socket.send(file_name.encode())
+            if os.path.exists(file_name):
+                # Gets the size of the file
+                file_size = os.path.getsize(file_name)
+                client_socket.send(f"{file_name},{file_size}".encode())
 
-            with open(file_name, 'rb') as file:
-                file_data = file.read(4096)
-                client_socket.send(file_data)
-            print(f"File '{file_name}' sent successfully.")
+                with open(file_name, 'rb') as file:
+                    file_data = file.read(4096)
+                    client_socket.send(file_data)
+                print(f"File '{file_name}' of size {file_size} bytes sent successfully.")
+            else:
+                print("File not found.")
 
         # The client wants to end the connection
         elif message.lower() == 'bye' or message.lower() == 'goodbye':
