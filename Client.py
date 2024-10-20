@@ -30,8 +30,11 @@ def client_program():
                 client_socket.send(f"{file_name},{file_size}".encode())
 
                 with open(file_name, 'rb') as file:
-                    file_data = file.read(4096)
-                    client_socket.send(file_data)
+                    while True:
+                        file_data = file.read(4096)
+                        if not file_data:
+                            break
+                        client_socket.send(file_data)
                 print(f"File '{file_name}' of size {file_size} bytes sent successfully.")
             else:
                 print("File not found.")

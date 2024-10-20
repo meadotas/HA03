@@ -48,7 +48,7 @@ def server_program():
             received_data = b''
             # Open a new file in write-binary mode with the name prefixed by 'received'
             with open(f'received_{file_name}', 'wb') as file:
-                if len(received_data) < file_size:
+                while len(received_data) < file_size:
                     # Receive the file data from the client (up to 4096 bytes)
                     file_data = connection.recv(4096)
                     if not file_data:
@@ -56,8 +56,8 @@ def server_program():
                     # Write the received data to the new file
                     file.write(file_data)
                     received_data += file_data
-                    # Print confirmation message
-                    print(f"File '{file_name}' of size {file_size} received successfully.")
+                # Print confirmation message
+                print(f"File '{file_name}' of size {file_size} received successfully.")
         else:
             # Otherwise the data received was not a 'send file"
             # Server sends a reply message to the client
